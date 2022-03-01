@@ -2,25 +2,53 @@
 {% block body %}
 <table class="table table-condensed table-hover">
     <tr>
-        <th>Name</th><th>IP Address</th><th>Actions</th>
+        <th>Name</th>
+        <th>Autostart</th>
+        <th>IP Address</th>
+        <th>Actions</th>
     </tr>
-    {% for m in machines %}
+    {% for machine in machines %}
     <tr>
-        <td class="{{m.klass}}">{{ m.name }}</td>
-        <td>{{ ', '.join(m.get_ips()) }}</td>
+        <td class="{{machine.html_class}}">{{ machine.name }}</td>
+        {% if machine.autostart == "1" %}
+        <td class="text-success">
+            <div title="Yes" class="btn btn-success">
+                <i class="icon-ok-circle icon-white"></i>
+            </div>
+        </td>
+        {% else %}
+        <td class="text-success">
+            <div title="Yes" class="btn btn-danger">
+                <i class="icon-remove-circle icon-white"></i>
+            </div>
+        </td>
+        {% endif %}
+        <td>{{ machine.ipv4 }}</td>
         <td>
-            {% if m.state == "STOPPED" %}
-            <a title="Start" data-action="start" data-name="{{ m.name }}" role="button" role="dialog" data-toggle="modal" data-target="#machineaction" class="btn btn-success" ><i class="icon-play icon-white"></i></a>
-            {% else %} 
-            <div title="stop" data-action="stop" data-name="{{ m.name }}" role="button" role="dialog" data-toggle="modal" data-target="#machineaction" class="btn btn-warning" ><i class="icon-off icon-white"></i></div>
+            {% if machine.state == "STOPPED" %}
+            <div title="Start" data-action="start" data-name="{{ machine.name }}" data-target="#machineaction"
+                data-toggle="modal" class="btn btn-success" role="button" role="dialog"><i
+                    class="icon-play icon-white"></i>
+            </div>
+            {% else %}
+            <div title="Stop" data-action="stop" data-name="{{ machine.name }}" data-target="#machineaction"
+                data-toggle="modal" class="btn btn-warning" role="button" role="dialog"><i
+                    class="icon-off icon-white"></i>
+            </div>
             {% endif %}
-            <div title="Clone" data-action="clone" data-name="{{ m.name }}" data-target="#machineclone" data-toggle="modal" class="btn btn-inverse" role="button" role="dialog"><i class="icon-white icon-retweet"></i></div>
-            <div title="Delete" data-action="delete" data-name="{{ m.name }}" role="button" role="dialog" data-toggle="modal" data-target="#machineaction" class="btn btn-danger"><i class="icon-white icon-trash"></i></div>
+            <div title="Clone" data-action="clone" data-name="{{ machine.name }}" data-target="#machineclone"
+                data-toggle="modal" class="btn btn-inverse" role="button" role="dialog"><i
+                    class="icon-white icon-retweet"></i>
+            </div>
+            <div title="Delete" data-action="delete" data-name="{{ machine.name }}" data-target="#machineaction"
+                data-toggle="modal" class="btn btn-danger" role="button" role="dialog"><i
+                    class="icon-white icon-trash"></i>
+            </div>
         </td>
     </tr>
     {% else %}
-    <li><em>Unbelievable.  No machine here so far</em>
-    {% endfor %}
+    <li><em>No LXC containers found.</em>
+        {% endfor %}
 </table>
 <div id="machineaction" class="modal hide fade action-modal">
     <div class="modal-header">
@@ -30,7 +58,7 @@
     <div class="modal-body">You are about to %action% this machine</div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <button class="btn btn-primary" ></button>
+        <button class="btn btn-primary"></button>
     </div>
 </div>
 <div id="machineclone" class="modal hide fade action-modal">

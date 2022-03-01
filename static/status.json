@@ -1,0 +1,37 @@
+{
+    "lxc_running": [
+        {
+            "name": "foo",
+            "state": "RUNNING",
+            "autostart": "0",
+            "ipv4": "192.168.4.31"
+        },
+        {
+            "name": "gitea",
+            "state": "RUNNING",
+            "autostart": "1",
+            "ipv4": "192.168.4.233"
+        },
+        {
+            "name": "minio",
+            "state": "RUNNING",
+            "autostart": "1",
+            "ipv4": "192.168.4.227"
+        },
+        {
+            "name": "unifi",
+            "state": "RUNNING",
+            "autostart": "1",
+            "ipv4": "192.168.4.222"
+        }
+    ],
+    "lxc_stopped": [
+        {
+            "name": "vault",
+            "state": "STOPPED",
+            "autostart": "0",
+            "ipv4": null
+        }
+    ],
+    "last_update": 1646126189.999757
+}
